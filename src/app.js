@@ -20,11 +20,19 @@ const app = express();   // it means creating a web server using express
 // yes , squence matter as ager now i write /hello on browser then it print hello vali statement not / this vali bcz / neeche hh hello ke so server k malum nhi hh ki phle ye / aa chuka hh, bcz ye / neeche hh
 
 // if we take app.use ("user") es sabh get, post, delete k uper then ye vala ko print ho rhq hh bcz order matter yrr!!! as esko dikh gya ki jaise hi /user aye tou phla vala hi print kr dena that is reason
-app.use("/user",(req,res)=>{
-    res.send("order matter bro");
+// app.use("/user",(req,res)=>{
+//     console.log(req.query)  // so when we write http://localhost:3000/user?userId=101 then to get { userId: '101' } we use 
+//     res.send("order matter bro");
+// })
+// similarly i want as  http://localhost:3000/user/2000 ,(this is call as dynamic) then we do so as 
+app.use("/user/:userId",(req,res)=>{    // can add any dynamic futher also "/user/:userId/:name/:paaword" here : this means it isa dynamic route 
+    console.log(req.params)     
+    res.send({firstname: "hahahhaha", lastname: "noooo"});
 })
+
 //this will only handle get calls to /user
 app.get("/user", (req,res)=>{
+    
     res.send({firstname: "money", lastname: "chugh"})
 })
 // as here uper get valalikha hua es get vale ko post per daalege tou erro dehga ki not found bcz uper vala hi get ka so post ka chaie so see below code
@@ -37,6 +45,12 @@ app.post("/user", (req,res)=>{
 app.delete("/user",(req,res)=>{
     res.send("delted successfully");
 })
+// let us explore more
+// as ab?c is there when we write in postmen /abc or /ac it give usthe first and last name 
+app.get("/ab?c",(req,res)=>{
+    res.send({firstname:"naina",lastname:"goo"})
+})
+// see in nb we also use ab+c, and many more 
 
 // this will match all https method api calls to /test
 app.use("/test",(req,res)=>{    // this whole func call as request handler 
