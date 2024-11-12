@@ -91,17 +91,95 @@ const app=  express()
 // })
 
 // m-2  as for same route we use it in diff lines by define route again
-app.get("/user",(req,res,next)=>{
-    console.log("handling it na !!")
-    res.send("okay ji handler 1111");
+
+// app.get("/user",(req,res,next)=>{
+//     console.log("handling it na !!")
+//     res.send("okay ji handler 1111");
+// })
+// app.get("/user",(req,res,next)=>{
+//     console.log("handle ho gya  !!")
+//     res.send("nthg");
+//     next();
+// })
+// app.listen(7777,()=>{  
+//     console.log("now it is done okay na , happy y r now"); 
+// })
+
+
+// as it is not easy way to solve it  in forming differnt route and solve it ,  as req is send not directlt first it is authorised then it is send 
+
+// app.get("/admin/alldata",(req,res,next)=>{
+//     // logic of checking is req authorised 
+//     const token ="xwedfgt";
+//     const isAdminAuthorisez =token ==="xyz";
+//     if(isAdminAuthorisez){
+//         res.send("yes it is");
+//     }
+//     else{
+//         res.status(401).send("unauthorized request");  // as ye status ka mtlb hota hh jaise 404 mtlb not found 401 mtlb unauthorised hh
+
+//     }
+// });
+// app.get("/admin/deletedata",(req,res,next)=>{
+//     // logic of checking is req authorised 
+//     const token ="xwedfgt";
+//     const isAdminAuthorisez =token ==="xyz";
+//     if(isAdminAuthorisez){
+//         res.send("yes it is deleted ");
+//     }
+//     else{
+//         res.status(401).send("unauthorized request");  // as ye status ka mtlb hota hh jaise 404 mtlb not found 401 mtlb unauthorised hh
+
+//     }
+// });
+// app.listen(7777,()=>{  
+//     console.log("now it is done okay na , happy y r now"); 
+// })
+
+//as this is not good way to write logic of token in all so that why we now study the concept of middleware 
+// so we use middleware : so correct way is down :
+
+// app.use("/admin",(req,res,next)=>{
+//     const token ="xyz";
+//     const isAdminAuthorisez =token ==="xyz";
+//     if(!isAdminAuthorisez){
+//         res.status(401).send("unauthorized request");  // as ye status ka mtlb hota hh jaise 404 mtlb not found 401 mtlb unauthorised hh
+//     }
+//     else{
+//        next();
+
+//     }
+// });
+// app.get("/admin/alldata",(req,res)=>{
+//      res.send("yes it is");
+// });
+// app.get("/admin/deletedata",(req,res)=>{
+//    res.send("yes it is deleted ");
+// });
+// app.listen(7777,()=>{  
+//     console.log("now it is done okay na , happy y r now"); 
+// })
+// we dont write this middlewares here so for this we create a folder middlwares and add file  in that 
+
+const {adminAuth} = require("./middlewares/auth")
+const {userAuth} =require("./middlewares/auth")
+app.use("/admin",adminAuth);
+app.use("/user",userAuth); // m-1 , m-2 is when single user is present then write as app.get("/user",useAuth, (req,res)=>{  res.send(" i am a user");   })
+
+// create one more same as admin as user to understand better
+app.get("/user",(req,res)=>{
+    res.send(" i am a user");
 })
-app.get("/user",(req,res,next)=>{
-    console.log("handle ho gya  !!")
-    res.send("nthg");
-    next();
-})
+app.get("/admin/alldata",(req,res)=>{
+     res.send("yes it is");
+});
+app.get("/admin/deletedata",(req,res)=>{
+   res.send("yes it is deleted ");
+});
 app.listen(7777,()=>{  
     console.log("now it is done okay na , happy y r now"); 
 })
+
+
 
 
