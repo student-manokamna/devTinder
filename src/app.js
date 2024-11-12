@@ -67,3 +67,25 @@ app.listen(3000, ()=>{
     console.log(" server successfully listening  on port no. 3000")
 });   // it also take a callvback func
 
+
+
+// now it is 18 lec in which we study route handler and middle ware
+
+// const express = require("express");
+// const app=  express()
+// app.use("/users",
+//     (req,res,next)=>{
+//     console.log("this is first handler")
+// //     res.send("send it now , happy -> 1");
+// next();
+//  },
+// (req,res)=>{
+  
+//     res.send("send it now , happy -> 2");
+//     console.log("this is second handler")
+// }
+// );
+// app.listen(7777,()=>{  
+//     console.log("now it is done okay na , happy y r now"); 
+// })
+
