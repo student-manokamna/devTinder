@@ -73,19 +73,19 @@
 
 const express = require("express");
 const app=  express()
-app.use("/users",
-    (req,res,next)=>{
-    console.log("this is first handler")
-//     res.send("send it now , happy -> 1");
-next();
- },
-(req,res)=>{
-  
-    res.send("send it now , happy -> 2");
-    console.log("this is second handler")
-}
-);
+// see m-1 on github
+// m-2  as for same route we use it in diff lines by define route again
+app.get("/user",(req,res,next)=>{
+    console.log("handling it na !!")
+    res.send("okay ji handler 1111");
+})
+app.get("/user",(req,res,next)=>{
+    console.log("handle ho gya  !!")
+    res.send("nthg");
+    next();
+})
 app.listen(7777,()=>{  
     console.log("now it is done okay na , happy y r now"); 
 })
+
 
