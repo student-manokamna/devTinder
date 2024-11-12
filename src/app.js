@@ -161,24 +161,66 @@ const app=  express()
 // })
 // we dont write this middlewares here so for this we create a folder middlwares and add file  in that 
 
-const {adminAuth} = require("./middlewares/auth")
-const {userAuth} =require("./middlewares/auth")
-app.use("/admin",adminAuth);
-app.use("/user",userAuth); // m-1 , m-2 is when single user is present then write as app.get("/user",useAuth, (req,res)=>{  res.send(" i am a user");   })
 
-// create one more same as admin as user to understand better
-app.get("/user",(req,res)=>{
-    res.send(" i am a user");
+// const {adminAuth} = require("./middlewares/auth")
+// const {userAuth} =require("./middlewares/auth")
+// app.use("/admin",adminAuth);
+// app.use("/user",userAuth); // m-1 , m-2 is when single user is present then write as app.get("/user",useAuth, (req,res)=>{  res.send(" i am a user");   })
+
+// // create one more same as admin as user to understand better
+// app.get("/user",(req,res)=>{
+//     res.send(" i am a user");
+// })
+// app.get("/admin/alldata",(req,res)=>{
+//      res.send("yes it is");
+// });
+// app.get("/admin/deletedata",(req,res)=>{
+//    res.send("yes it is deleted ");
+// });
+// app.listen(7777,()=>{  
+//     console.log("now it is done okay na , happy y r now"); 
+// })
+// error handlor m-1
+
+
+// app.get("/getuserdata",(req,res)=>{
+//     // logic of db call  and get user data
+//     throw new Error("fwjdwi")
+//     res.send("user data send");
+// })
+// app.use("/",(err,req,res,next)=>{
+//     if(err){
+//         res.status(500).send("somthing went wrong")
+//     }
+// });
+// app.listen(7777,()=>{  
+//          console.log("now it is done okay na , happy y r now"); 
+//      });
+
+// but best way is  try catch: m-2 
+
+app.get("/getuserdata",(req,res)=>{
+try{
+
+    // logic of db call  and get user data
+    throw new Error("fwjdwi")
+    res.send("user data send");
+}
+
+
+    catch(err){
+        res.status(500).send("somthing went wrong here ")
+    }
+});
+// at last we write wild error as jab kuch na chle uper tou ye hi chl jaye
+app.use("/", (err,req,res,next)=>{
+if(err){
+    res.status(500).send("somthing mwrong  ")
+}
 })
-app.get("/admin/alldata",(req,res)=>{
-     res.send("yes it is");
-});
-app.get("/admin/deletedata",(req,res)=>{
-   res.send("yes it is deleted ");
-});
 app.listen(7777,()=>{  
-    console.log("now it is done okay na , happy y r now"); 
-})
+         console.log("now it is done okay na , happy y r now"); 
+     });
 
 
 
