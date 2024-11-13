@@ -94,7 +94,9 @@ const app=  express()
 
 // app.get("/user",(req,res,next)=>{
 //     console.log("handling it na !!")
+   
 //     res.send("okay ji handler 1111");
+    
 // })
 // app.get("/user",(req,res,next)=>{
 //     console.log("handle ho gya  !!")
@@ -199,29 +201,36 @@ const app=  express()
 
 // but best way is  try catch: m-2 
 
-app.get("/getuserdata",(req,res)=>{
-try{
+// app.get("/getuserdata",(req,res)=>{
+// try{
 
-    // logic of db call  and get user data
-    throw new Error("fwjdwi")
-    res.send("user data send");
-}
+//     // logic of db call  and get user data
+//     throw new Error("fwjdwi")
+//     res.send("user data send");
+// }
 
 
-    catch(err){
-        res.status(500).send("somthing went wrong here ")
-    }
-});
-// at last we write wild error as jab kuch na chle uper tou ye hi chl jaye
-app.use("/", (err,req,res,next)=>{
-if(err){
-    res.status(500).send("somthing mwrong  ")
-}
-})
+//     catch(err){
+//         res.status(500).send("somthing went wrong here ")
+//     }
+// });
+// // at last we write wild error as jab kuch na chle uper tou ye hi chl jaye
+// app.use("/", (err,req,res,next)=>{
+// if(err){
+//     res.status(500).send("somthing mwrong  ")
+// }
+// })
+// app.listen(7777,()=>{  
+//          console.log("now it is done okay na , happy y r now"); 
+//      });
+
+// lec 19
+
+// const express = require("express");
+// const app=  express()  // ye tou uper likha hua hh eske neeche likhna
+
+require("./config/database")
 app.listen(7777,()=>{  
-         console.log("now it is done okay na , happy y r now"); 
-     });
-
-
-
+              console.log("now it is done okay na , happy y r now"); 
+      });
 
