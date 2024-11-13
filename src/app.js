@@ -229,8 +229,66 @@ const app=  express()
 // const express = require("express");
 // const app=  express()  // ye tou uper likha hua hh eske neeche likhna
 
-require("./config/database")
-app.listen(7777,()=>{  
-              console.log("now it is done okay na , happy y r now"); 
-      });
+// require("./config/database")
+// app.listen(7777,()=>{  
+//               console.log("now it is done okay na , happy y r now"); 
+//       });
+
+// as abive is not good way bcz here we r lisetening then database is connected what if listen is happening but data is not there so
+// write is first connect to database then to listen
+
+// import
+//  const connectdb = require("./config/database")
+ 
+  
+//  connectdb()
+//  .then( ()=>{
+//     console.log("database connection is established!!!")
+//     app.listen(7777,()=>{  
+//         console.log("now it is done okay na , happy y r now");   //once database establiash then app will listen
+// });
+//     })
+//     .catch(err=>{
+//         console.error("database not handles.....")
+//     })
+
+// npw to fetch api or add something to it 
+
+
+ const connectdb = require("./config/database")
+ const User = require("./models/user")
+ // to add some data then hhtp method is post : we r creating sign up user 
+ app.post("/signup",async (req,res)=>{
+// create a dummy data
+const userObj  ={
+    firstName: "money",
+    lastName: "arora",
+    emailId : "money@arora.com",
+    password: "money@123"
+}
+// to save this userobj in our manogodb we have to create a instances of model , as we create a instance of the user model which is already inuser.js and we add this userobj in that model
+// so above firstly require user ;
+const user = new User(userObj); // it means we create a new user with th data in userobj
+//or me say we creating ainstance of user model as it consist new, name of model is User and the data which we need to store in user 
+// as alag se userobj na bnaker new user ({ k ander userobj vala data daal do })---m-2
+
+await user.save(); // it will save data to database , and it return promise;
+// remember: most of mongoose func return promises so we have to use await and make a func async;
+res.send("user added successfully");  // end a response back
+// now after this check on mongodb comapss we get our devtinder file is there in which we store our dummy data
+// now lwts change name money to mano , and baki sabh bhi kr do fir api call kroge or mangodb per dekho ge tou mano vala bhi aa jayega 
+// as here _id or --v aapne aata hh mongocompass m as ye piche se mongo m define hh and we ad manually also id jaise firstname likha hh 
+ })
+
+  
+ connectdb()
+ .then( ()=>{
+    console.log("database connection is established!!!")
+    app.listen(7777,()=>{  
+        console.log("now it is done okay na , happy y r now");   //once database establiash then app will listen
+});
+    })
+    .catch(err=>{
+        console.error("database not handles.....")
+    })
 
