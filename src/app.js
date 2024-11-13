@@ -272,12 +272,26 @@ const user = new User(userObj); // it means we create a new user with th data in
 //or me say we creating ainstance of user model as it consist new, name of model is User and the data which we need to store in user 
 // as alag se userobj na bnaker new user ({ k ander userobj vala data daal do })---m-2
 
-await user.save(); // it will save data to database , and it return promise;
+// await user.save();
+
+ // it will save data to database , and it return promise;
 // remember: most of mongoose func return promises so we have to use await and make a func async;
-res.send("user added successfully");  // end a response back
+
+// res.send("user added successfully");  
+
+// end a response back
 // now after this check on mongodb comapss we get our devtinder file is there in which we store our dummy data
 // now lwts change name money to mano , and baki sabh bhi kr do fir api call kroge or mangodb per dekho ge tou mano vala bhi aa jayega 
 // as here _id or --v aapne aata hh mongocompass m as ye piche se mongo m define hh and we ad manually also id jaise firstname likha hh 
+
+
+// always keep this all in try catch so let us do in that 
+try{
+    await user.save();
+    res.send("user added successfully");  
+} catch(err){
+    res.status(400).send("error saving the user:"+ err.message);
+}
  })
 
   
