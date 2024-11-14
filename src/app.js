@@ -255,54 +255,163 @@ const app=  express()
 // npw to fetch api or add something to it 
 
 
- const connectdb = require("./config/database")
- const User = require("./models/user")
- // to add some data then hhtp method is post : we r creating sign up user 
- app.post("/signup",async (req,res)=>{
-// create a dummy data
-const userObj  ={
-    firstName: "money",
-    lastName: "arora",
-    emailId : "money@arora.com",
-    password: "money@123"
-}
-// to save this userobj in our manogodb we have to create a instances of model , as we create a instance of the user model which is already inuser.js and we add this userobj in that model
-// so above firstly require user ;
-const user = new User(userObj); // it means we create a new user with th data in userobj
-//or me say we creating ainstance of user model as it consist new, name of model is User and the data which we need to store in user 
-// as alag se userobj na bnaker new user ({ k ander userobj vala data daal do })---m-2
+//  const connectdb = require("./config/database")
+//  const User = require("./models/user")
+//  // to add some data then hhtp method is post : we r creating sign up user 
+//  app.post("/signup",async (req,res)=>{
+// // create a dummy data
+// const userObj  ={
+//     firstName: "money",
+//     lastName: "arora",
+//     emailId : "money@arora.com",
+//     password: "money@123"
+// }
+// // to save this userobj in our manogodb we have to create a instances of model , as we create a instance of the user model which is already inuser.js and we add this userobj in that model
+// // so above firstly require user ;
+// const user = new User(userObj); // it means we create a new user with th data in userobj
+// //or me say we creating ainstance of user model as it consist new, name of model is User and the data which we need to store in user 
+// // as alag se userobj na bnaker new user ({ k ander userobj vala data daal do })---m-2
 
-// await user.save();
+// // await user.save();
 
- // it will save data to database , and it return promise;
-// remember: most of mongoose func return promises so we have to use await and make a func async;
+//  // it will save data to database , and it return promise;
+// // remember: most of mongoose func return promises so we have to use await and make a func async;
 
-// res.send("user added successfully");  
+// // res.send("user added successfully");  
 
-// end a response back
-// now after this check on mongodb comapss we get our devtinder file is there in which we store our dummy data
-// now lwts change name money to mano , and baki sabh bhi kr do fir api call kroge or mangodb per dekho ge tou mano vala bhi aa jayega 
-// as here _id or --v aapne aata hh mongocompass m as ye piche se mongo m define hh and we ad manually also id jaise firstname likha hh 
+// // end a response back
+// // now after this check on mongodb comapss we get our devtinder file is there in which we store our dummy data
+// // now lwts change name money to mano , and baki sabh bhi kr do fir api call kroge or mangodb per dekho ge tou mano vala bhi aa jayega 
+// // as here _id or --v aapne aata hh mongocompass m as ye piche se mongo m define hh and we ad manually also id jaise firstname likha hh 
 
 
-// always keep this all in try catch so let us do in that 
-try{
-    await user.save();
-    res.send("user added successfully");  
-} catch(err){
-    res.status(400).send("error saving the user:"+ err.message);
-}
- })
+// // always keep this all in try catch so let us do in that 
+// try{
+//     await user.save();
+//     res.send("user added successfully");  
+// } catch(err){
+//     res.status(400).send("error saving the user:"+ err.message);
+// }
+//  })
 
   
- connectdb()
- .then( ()=>{
-    console.log("database connection is established!!!")
-    app.listen(7777,()=>{  
-        console.log("now it is done okay na , happy y r now");   //once database establiash then app will listen
-});
-    })
-    .catch(err=>{
-        console.error("database not handles.....")
-    })
+//  connectdb()
+//  .then( ()=>{
+//     console.log("database connection is established!!!")
+//     app.listen(7777,()=>{  
+//         console.log("now it is done okay na , happy y r now");   //once database establiash then app will listen
+// });
+//     })
+//     .catch(err=>{
+//         console.error("database not handles.....")
+//     })
 
+
+// lec 20
+
+// const connectdb = require("./config/database")
+//  const User = require("./models/user")
+ 
+//  app.use(express.json()); // this is middlware 
+//  app.post("/signup",async (req,res)=>{
+
+//  console.log(req.body);
+//  });
+//  connectdb()
+//   .then( ()=>{
+//      console.log("database connection is established!!!")
+//      app.listen(7777,()=>{  
+//          console.log("now it is done okay na , happy y r now");   //once database establiash then app will listen
+//  });
+//      })
+//      .catch(err=>{
+//          console.error("database not handles.....")
+//      })
+     
+
+// now let  us take our prev-prev code back
+
+const connectdb = require("./config/database")
+ const User = require("./models/user")
+ 
+ app.use(express.json()); // this is middlware 
+ app.post("/signup",async (req,res)=>{
+
+ 
+//  const userObj  ={   // aab eska use nhi bcz userobj same hi hh req.body jaise so humne esko hta kr new user k ander req.body lik diya 
+
+//         firstName: "money",
+//         lastName: "arora",
+//         emailId : "money@arora.com",
+//         password: "money@123"
+//     }
+    const user = new User(req.body);  // as userobj ki jagaj likha bca it is same as req.body
+    try{
+            await user.save();
+            res.send("user added successfully");  
+        } catch(err){
+            res.status(400).send("error saving the user:"+ err.message);
+        }
+      });
+      // now get user by its email : 
+      app.get("/user",async (req,res)=>{
+const userEmail = req.body.emailId;  // hume email chaie so humne body se req krke emailId li and it is that emailId jo vaha likhi hh postman per 
+try{
+     const users = await User.find({emailId : userEmail});  // i means it will find that user, whose  emailid which match with it 
+    if(users.length===0){
+        res.status(404).send("user not found ")
+    }
+    else{
+     res.send(users);
+    }
+}
+catch(err){
+    res.status(400).send("smth is wrong ")
+}
+      });
+
+      // get api : GET/feed - get all user data in database 
+      app.get("/feed", async (req,res)=>{
+        try{
+            const users = await User.find({})  // empty means it will take all users document or data
+      res.send(users);
+        }
+        catch(err){
+            res.status(400).send("smth is wrong ")
+        }
+      })
+      // now to delete 
+      app.delete("/user",async (req,res)=>{
+        const userId = req.body.userId;
+        try{
+            // const user = await User.findByIdAndDelete({_id: userId})  // m-1 
+            const user = await User.findByIdAndDelete(userId)
+         res.send("user delted successfully");
+        }
+        catch(err){
+            res.status(400).send("smth is wrong ")
+        }
+      })
+      
+      // now to update data
+      app.patch("/user", async (req,res)=>{
+        const userId = req.body.userId;
+        const data = req.body;  // the data which we need to update
+        try{
+          await User.findByIdAndUpdate({_id: userId}, data);
+          res.send(" is it updated successfully");
+        }
+        catch(err){
+            res.status(400).send("smth is wrong ")
+        }
+      })
+ connectdb()
+  .then( ()=>{
+     console.log("database connection is established!!!")
+     app.listen(7777,()=>{  
+         console.log("now it is done okay na , happy y r now");   //once database establiash then app will listen
+ });
+     })
+     .catch(err=>{
+         console.error("database not handles.....")
+     })
