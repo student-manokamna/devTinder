@@ -397,7 +397,20 @@ catch(err){
       app.patch("/user", async (req,res)=>{
         const userId = req.body.userId;
         const data = req.body;  // the data which we need to update
+       
         try{
+             // this below some lines r part of lec 21 in which we mentioning that plz req.body if email come dont update it 
+        const ALLOWED_UPDATES = ["userId","photoUrl","age","skills","gender","about"] ;
+        const isUpdateAllowed = Object.keys(data).every((k)=>  // it means ki ye sare userid, age, skills ye sabh keys  hh or data jo ki uder psotman per hh filhal(req.body m ) so we r saying ki ager every key present hh allowed_uodated vale m then ojk if not then  err through kr do 
+        ALLOWED_UPDATES.includes(k)
+    );
+    if(!isUpdateAllowed){
+       throw new Error("updated not allow") // as here we r not giving email in main allowed_updates, so it is giving this if cond  
+    }
+    if(data?.skills.length>10){
+        throw new Error("skills cannot be more than 10");
+    }
+    // bs yaha tk tha 21 vala 
           await User.findByIdAndUpdate({_id: userId}, data,{
             returnDocument: "after",
             runValidators:true,
@@ -439,6 +452,17 @@ catch(err){
     // after add take id of suhani and give gender to it and check it on postman , now also add skills in same and check on compass 
     // how to check a when user has visit / login website mainly we want to check time, day ,date (visit mongoose-timestamps website  ):: add timestaps as 2nd argument in user.js a const userschema = new moongose  vale m start m , solve an eg by take new user document , it will give createdat and updatedat
     // this createdata and updated chabge when we update any value then it time changes than that when we craeted it (patch)
-    
+    // as now u know that we can update anything it also may be email but we dont want to update our emails bcz it s not a good thing , so for that w ehave to call our api validation : as we want that it will update certain filds 
+    // so all these control in patch(app.patch) so we say to req.body if my email come then dont update it so write something in app.patch :now do eg on this in patch/user
+    // as we also dont want to update our userid so for that we do is:
+    // app.patch("/user/:userId", async (req,res)=>{
+    //     const userId = req.param?.userId;      // and remove userid from ALLOWED_UPDATES
+    // baki sabh same hi hh jo uper tha esme bs humne ye user id ko likh diya user k sath 
+    // as ager koi hamri skill m likhta hi jaye jiska koi use nhi hh, it is basically for distry our database so for this skills per bhi validation lga do in app.js in try :
+    // DATA SANITIZING : add API validation  for each field 
+    // as it is diificult to hanle email bcz we have to take in aboy .com , @ , small or big letter , so it is difficult to hanle directly this validtor so we use npm validtor and download it (see google to explore more)
+    // so in terminal write : npm i validator and we get this in package json
+    // go to user.js and in email write validiate fun , first require validtor , also use validtor for phtoturl, same for password also (for strong password)
+
 
     

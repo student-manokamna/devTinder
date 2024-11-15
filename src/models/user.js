@@ -1,6 +1,6 @@
 
 const mongoose = require("mongoose");
-
+const validator = require("validator");
 const userSchema = new mongoose.Schema({
     firstName: {
         type: String,
@@ -17,10 +17,20 @@ const userSchema = new mongoose.Schema({
         unique: true,     // same in lec 21 
         lowercase: true,
         trim:true,
+        validate(value){
+            if(!validator.isEmail(value)){
+                throw new Error("invalid email adress:"+value);
+            }
+        }
     },
     password: {
         type: String,
         required: true,
+        validate(value){
+            if(!validator.isStrongPassword(value)){
+                throw new Error("ENTER STRONG PASSWORD :"+value);
+            }
+        }
     },
     age: {
         type: String,
@@ -36,7 +46,12 @@ const userSchema = new mongoose.Schema({
     },
     photoUrl:{
         type: String,
-        default: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQABqQIdskCD9BK0I81EbVfV9tTz320XvJ35A&s"
+        default: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQABqQIdskCD9BK0I81EbVfV9tTz320XvJ35A&s",
+        validate(value){
+            if(!validator.isURL(value)){
+                throw new Error("invalid photo url adress:"+value);
+            }
+        }
     },
     about:{
         type: String,
@@ -44,6 +59,7 @@ const userSchema = new mongoose.Schema({
     },
     skills:{
         type: [String]   // as it contain many skills so it is arr of string
+
     }
 },
 {
