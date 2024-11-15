@@ -398,11 +398,15 @@ catch(err){
         const userId = req.body.userId;
         const data = req.body;  // the data which we need to update
         try{
-          await User.findByIdAndUpdate({_id: userId}, data);
+          await User.findByIdAndUpdate({_id: userId}, data,{
+            returnDocument: "after",
+            runValidators:true,
+          });
           res.send(" is it updated successfully");
         }
-        catch(err){
-            res.status(400).send("smth is wrong ")
+        catch(err) {
+            console.error("Error details:", err); // Log the error details
+            res.status(400).send("Error saving the user: " + err.message);
         }
       })
  connectdb()
@@ -415,3 +419,26 @@ catch(err){
      .catch(err=>{
          console.error("database not handles.....")
      })
+     
+
+     // lec -21
+
+     // as pichle lec m humne dekha ki hum kuch bhi data m change kr rhe tou vo change ho rha tha as we want that valid data m hi change aye sara data transfer na ho so hum kuch restricted thing ya func ka use krege 
+     // as we r not worry about all the https , as we r worry about mainly post and patch in which we insert data
+     // as so even if if putting check in api lest us first put checks in database(means in schema models ), so go to user.js and write some strict code, if this not met we dont insert anything 
+     // as we know ki hume req field chaie uske bina user document define nhi hoga , so hum es models m hi phle se kuch ese chije daal de jo ki required hh user ko define krne k liye like its name, email, password (for more see moongose documentation - schema types in it)
+     // so user.js m jaker firstname m required= true likh do ager firstname nhi hoga tou moongose will not allow futher insertion 
+     // as we aslo see when we login in website if user already exist it thorigh eror ki hh same for eamil we dint use it agian we already login in it , so for that in moongose we have unique:true
+     // as we also adding some user information in schema like its photourl, skills ,about... in user.js...as we dos so to enter default : values in it 
+     //now lets do eg of this in which we add default value : so create a new user and its password 
+     // now solve eg by taking dfault photourl also
+     // some user enter emailid in mix upper and lower we want in lower as user write in anything we want that we get in lower so : solve eg 
+     // as mongoose treat space email as diff eg "moneyarora.com"  and "  moneyarora.com  " r diff so to make it same use of trim, and also define minlength and maxlength for a name or any other object , for numbers like age we have only min and max   
+    // as now to create custom validation func so  eg: in gender we ask about male, female , other so go to user.js (gender)
+    // as this validtor work on new doc so to work on updated also use of run validtor in app.js app.patch vale m
+    // after add take id of suhani and give gender to it and check it on postman , now also add skills in same and check on compass 
+    // how to check a when user has visit / login website mainly we want to check time, day ,date (visit mongoose-timestamps website  ):: add timestaps as 2nd argument in user.js a const userschema = new moongose  vale m start m , solve an eg by take new user document , it will give createdat and updatedat
+    // this createdata and updated chabge when we update any value then it time changes than that when we craeted it (patch)
+    
+
+    
