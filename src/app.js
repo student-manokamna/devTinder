@@ -333,27 +333,152 @@ const app=  express()
 
 const connectdb = require("./config/database")
  const User = require("./models/user")
+ const {validateSignUpData}=require("./utils/validation")   // lec 22 
+ const bcrypt = require("bcrypt");     // lec 22
+ const cookieParsel = require("cookie-parser");   // lec 23
+ const jwt = require("jsonwebtoken");    // lec 23
+ const {usersAuth} = require("./middlewares/auth")  // lec 23  
+ // this userauth is added to any api and this make that api very strong
  
  app.use(express.json()); // this is middlware 
- app.post("/signup",async (req,res)=>{
+ app.use(cookieParsel())  // this is middlware  lec 23 
+
+//  app.post("/signup",async (req,res)=>{       // yaha app.post likha hh or same authrouter define kiya tou vaha authrouter.post likhege  so i am hidng this bcz hum ek m sabh nhi likhte 
 
  
-//  const userObj  ={   // aab eska use nhi bcz userobj same hi hh req.body jaise so humne esko hta kr new user k ander req.body lik diya 
+// //  const userObj  ={   // aab eska use nhi bcz userobj same hi hh req.body jaise so humne esko hta kr new user k ander req.body lik diya 
 
-//         firstName: "money",
-//         lastName: "arora",
-//         emailId : "money@arora.com",
-//         password: "money@123"
-//     }
-    const user = new User(req.body);  // as userobj ki jagaj likha bca it is same as req.body
-    try{
-            await user.save();
-            res.send("user added successfully");  
-        } catch(err){
-            res.status(400).send("error saving the user:"+ err.message);
+// //         firstName: "money",
+// //         lastName: "arora",
+// //         emailId : "money@arora.com",
+// //         password: "money@123"
+// //     }
+// //    validateSignUpData(req);   // lec 22   put this in try catch so eske neeche vala const user bhi abb esme hi ayega bcz we say phle validation then it create instance of it 
+
+// try{
+//     validateSignUpData(req);
+//     // creating strong password // lec 22
+//     const {firstName, lastName, emailId,password} = req.body;
+//     // encrypt password 
+//     const passwordHash =  await bcrypt.hash(password,10);  // here 10 is saltround
+//     console.log(passwordHash);
+//     // const user = new User(req.body);  // as userobj ki jagaj likha bca it is same as req.body
+//     // the above is a bad practice as to directly pass req.body // (lec-22) so correct way is
+//     const user = new User({  // as eske nander vo likhe hh jo hume req hh baki sabh ignore ho jauyege jo esme nhi hh 
+//       firstName,
+//       lastName,
+//       emailId,    
+//       password: passwordHash,
+//     });
+    
+  
+//             await user.save();
+//             res.send("user added successfully");  
+//         } catch(err){
+//             res.status(400).send("error saving the user:"+ err.message);
+//         }
+//       });
+
+
+
+      // now create a login   // lec 22
+      
+      
+      
+//       app.post("/login", async (req,res)=>{  // lec 22      // lec 24 same take in auth.js 
+//    try{
+//   // now for validation we know this login take email and password so first extract these both from req.body
+//       const {emailId, password} = req.body;
+//       // do validation ur self 
+//       const user = await User.findOne({emailId:emailId});
+//       if(!user){
+//         throw new Error("email is not present in db")
+//       }
+//       // const  isPasswordValid = await bcrypt.compare(password, user.password) // to commpre first check ki vo email present bhi hh kya db m 
+//       // above is m-1 ,,,so do ny m-2 is 
+//       const  isPasswordValid = await user.validatePassword(password)
+//       if(isPasswordValid){       // lec 22 
+//       // create jwt token    //  lec 23   toke n({hiding data}, "private/secret key")
+//       // const token = await jwt.sign({_id: user._id},"DEV@tinder$345",{
+//       //   expiresIn: "7d",
+//       // })   // this is rugjt but m-2 is 
+//       const token =  await user.getJWT();
+//       //  console.log(token);
+//        //so we create token now pass it back: neeche 
+//       // add token to  cokiee and send back to user      // lec 23
+//       // res.cookie("token", "hhcjchoiwwdw9uknccnckslqdjpqow9udy"); // we sww token cookie on ;postman, this is random only for practice
+//       //  so pass token here 
+//       res.cookie("token", token, {
+//         expires:new Date(Date.now() + 9*3600000)  
+//       });    // so now we validate this token in get profile 
+
+//       res.send("login successful")     // lec 22
+//      }
+//      else{
+//       throw new Error("incorrect password id ")    // lec 22
+//      }
+//    }
+//    catch(err){
+//     res.status(400).send("smth is wrong ")
+// }
+//       });
+
+
+      
+      // as we generate a cookie now to chcek it validation futher let us create a get/profile which take cookie with itself and validate it 
+      app.get("/profile", usersAuth, async (req,res)=>{          // create this in another file by see in lec 24
+        // try{    // this try is m-1 jab humne code auth.js m nhi likha as jab auth.js m lik diya tou ye same hi hogya na so esko modify krke likhgeg in m-2
+        //   const cookies = req.cookies;
+          
+        // // console.log(cookies);
+        // // vslidation of token 
+        // const {token} = cookies;
+        // if(!token){
+        //   throw new Error("invalid error")
+        // }
+        //  const decodedMessage  = await jwt.verify(token ,"DEV@tinder$345" ) // it contain toke and hideen data
+        // const {_id } =decodedMessage;
+        // console.log("logged in user is "+_id);   // now verify it by first login and then go to profile 
+        // // res.send("read cookies");  .. jab uper vala chlana ho tab ye chelga 
+
+        // // to get the profile back create a user :
+        //   const user = await User.findById(_id);
+        //   if(!user){
+        //     throw new Error("user not exist")
+        //   }
+        //   res.send(user);   // so now go to profile jo banda login hoga uska data aa jayega 
+
+        // // see as in response we get read cookies means hume vha vokkies mil gyi lekin in console we have undefined bcz humse ye cookies read nhi ho rhi,we r not getting it back here so for this we need a npm library, a middleware that is cookie parsal
+        // // so need a cookie-parser , it is also given by express.js , so now insatll it=> npm i cookie-parser 
+        // // after insatll import it and write middleware of it is app.use(cookieparsel());
+        // }
+        try{
+          const user = req.user  // se auth.js smj aa jayega neeche likha hh (as do to userauth), dry run it  by eg on postman 
+          res.send(user);   // so now go to profile jo banda login hoga uska data aa jayega 
+
+        // see as in response we get read cookies means hume vha vokkies mil gyi lekin in console we have undefined bcz humse ye cookies read nhi ho rhi,we r not getting it back here so for this we need a npm library, a middleware that is cookie parsal
+        // so need a cookie-parser , it is also given by express.js , so now insatll it=> npm i cookie-parser 
+        // after insatll import it and write middleware of it is app.use(cookieparsel());
         }
-      });
-      // now get user by its email : 
+        catch(err){
+          res.status(400).send("ERRROR: "+err.message);
+      }
+
+      })
+
+      app.post("/sendConnectionRequest", usersAuth, async (req,res)=>{
+        // to check ki kis user ne req bheji hh 
+        const user = req.user ;
+         // made  connection
+         console.log("connection is made");
+        //  res.send("send connection")
+        res.send( user.firstName+"send connection request!")   // now first go to login then goo to sendconnreq
+      })
+     
+ 
+
+    
+      // now get user by its email :     // eske neeche vale use nhi hh mere tinder k liye 
       app.get("/user",async (req,res)=>{
 const userEmail = req.body.emailId;  // hume email chaie so humne body se req krke emailId li and it is that emailId jo vaha likhi hh postman per 
 try{
@@ -465,4 +590,64 @@ catch(err){
     // go to user.js and in email write validiate fun , first require validtor , also use validtor for phtoturl, same for password also (for strong password)
 
 
-    
+
+    // lec -22 
+
+    // as here we see how password can be store: bcz we cannot store password like money@123 direct in database as it is not ssave or strong password
+    // we store password in hash and incrypted format and no one can see password in database , and it is save 
+    // as never trust req.body : bcz it conatin data which is coming from api(which is at postman), so we want that our sinup should be save bcz eme koi bhi hacking data daalna assan bcz ye data api se direct aata hh na 
+    // so your steps are:
+    // 1.  when signup then your first responsibility is first validate your data before creating instance of it 
+    // 2. encrypt the password and then store it in database 
+    // as for validation we take help of helpers(where we validate our data) so create a new folder in src name utils and in that file is validate.js
+  // solve all req field validate and then export and import it in app.js 
+  // as esme lastname defien krna postman vali api m bcz vo humne validation m li hh 
+   // as ager password m capital,small letter hh , number ya specila char(@#$%..) hh tou vo strong hh ..ye sare hone chai
+   // enko encrypted m convert krne k liye we use npm package is npm bcrypt (see offical): this give us hash ur password and validate ur password 
+ // more the number of round of saltthe tougher the password is , the more encryption level will bw more the tougher to break it 
+ // as we can  also generate salts , as bcrypt.gensalt(see documentation) as here , simple password combine with salts and undergo multiple round to icc encryption and then provide strong password 
+ // so write code in app.js in encryption  and console and check it , solve eg on it
+ // now we have created a signup , now we create a login to understand it better : do eg of it also 
+
+
+// lec 23 
+
+// so first go through copy
+// create a cookie upward 
+// create a get/profile 
+// send cookie back to user by res.cokkie(name, vlaue,[option]); it is given to us by express so see documentation of 
+// visit offical site of jwt.io as jwt consist of (header, payload(in which we hide our secret data), verify signature(it is used to validate the token is it is correct or not ))
+// so to create we need a npm library -> npm i jsonwebtoken 
+// and we know tokn is created just after we login so go to login api
+// so once create a token then validate thisin get/profile
+// then to get the eofile back we create a user 
+// if someone steal ur cookie then it will get all details of yours ,by steal cookie hacker can fetch all api of login user , but cokie only steal when ur computer is axcess to hacker and when u write js in ur console 
+// see login and signup do not need authentication but uske baad valo ko authentication chaie like /profile m tou humne auth set kr hi diya by token as no one access that similally baki sabh jaise /feed vala hogya enme set  krna hh 
+// so aab enme auth set krna hh jo ki middleware hh na , we create a auth so to validate the token 
+// go to auth.js and write code there , so make usersauth in and then export and import it in app.js 
+ // this userauth is added to any api and this make that api very strong
+ // how to use it lets take eg:     app.get("/profile",usersAuth, async (req,res)=>{
+       // try{eske ander jitna bhi code hh .. include it  }    
+       // eska mtlb ki /profile per aane k baad vo usersauth per jayega validate or verify krega token ko ager user verify nhi hua token se give error
+       // if match then call next( ) mean ki async(req,res){ } k ander vala code fir chelga ager user verify ho gya token validate ho gya 
+        // so simply ki if usersauth not called in middle then ye async vala function/req handlor chelkga hi nhi enko call hi nhi jayegi and it throw error ki user exist hi nhi krta 
+        // so jaise phle solve kr rkha hh usko vaise krni k jaruart nhi aaj hum sabh auth define krke aye hh na 
+        // so now solve eg on it 
+// so profile k neeche saei api co comment kr do as hum nayi bnayege so made  post/sendConnectionRequest  , make this api
+// see ager m esme usersAuth use nhi krugi then postman per jab send krege tab ye send ho jayega... lekin ager usersauth use kiya hh tab ye api ya res.send() vala tabhi ayega postman m jab user login hoga,  vrna error dega
+// if user is not login then ye nhi chelga ,  
+  // so this authentication is vry important bcz without this ur api is not save .. so if you want to et profile, find connec, update, delete then auth is necessry for this
+  // so now want that our token expire acc to ur coommand like, 1d,1h or never expire .. so fir this go to login api and move to jwt.sign and write experyin; so it espire token (jwt vala)
+  // now to expire cookies we use httponly as it work for http not for https ,   res.cookie("token", token, {expire: .....});
+ // now there is study of schema or userschema see form ur nb;
+
+
+
+ // lec 24 
+
+ // as we need to make dev tinder then we need diff api which is required mention in applist.md and to represent all api in one is bad practice so we dont represent in single file all apis 
+ // so to manage it we create a express router and handle router in proper way; (see express documentation)
+ // Express router: so herer we create a group of diff diff apis into small categories and provide them a seperate router to  handle each route 
+ // so create a folder routes in src which mange or router handler and in routes create a file auth.js which manages auth vale apis so esme signup,login,logout hh so ye maine app.js m directly bhi likhe hh so enko edhar nhi likhte enko routes m daalo 
+ // as authrouter is same as app in app.js as const app =express , as both r same as here authrouter = express.router(), here we define authrouter so instead of app.get/post we use authrouter.get/post
+// as we define app.use here we define router.use ;
