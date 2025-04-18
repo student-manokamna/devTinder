@@ -2,7 +2,7 @@
 // const mongoose =require("mongoose");// to get mongoose
 // // to connect it with cluster we need a simple querry that is
 
- //mongoose.connect("mongodb+srv://namastedev:87O3R4lgr9TEURAN@namastenode.9ucx0.mongodb.net/")
+ //mongoose.connect("mongodb+srv://name:<pasword>@nae.9ucx0.mongodb.net/")
 // // this above is not a good way bcz it does not handle after happen after this return a promises 
 // means mongoose.connect return a promise so we have to put it async awit func 
 // // m-2 is:
@@ -11,7 +11,7 @@
 
 // const connectdb = async ()=>{
 //     await mongoose.connect(
-//         "mongodb+srv://namastedev:87O3R4lgr9TEURAN@namastenode.9ucx0.mongodb.net/devTinder")
+//         "mongodb+srv://namedev:87URAN@namaode.9ucx0.mongodb.net/devTinder")
 // };
 // connectdb().then( ()=>{
 // console.log("database connection is established!!!")
@@ -22,7 +22,7 @@
 using simple func 
 async function connectdb() {
     await mongoose.connect(
-        "mongodb+srv://namastedev:87O3R4lgr9TEURAN@namastenode.9ucx0.mongodb.net/devTinder"
+        "mongodb+srv://namdev:87lgURAN@namaode.9ucx0.mongodb.net/devTinder"
     );
 }
 */
@@ -40,11 +40,8 @@ const mongoose =require("mongoose");// to get mongoose
 // mongodb+srv://namastedev:87O3R4lgr9TEURAN@namastenode.9ucx0.mongodb.net tis cluster should be correct bcz devtinder is to  connect to it so it should be correct
 
 const connectdb = async ()=>{
-//     await mongoose.connect(
-//         "mongodb+srv://namastedev:87O3R4lgr9TEURAN@namastenode.9ucx0.mongodb.net/devTinder")
-// };
 await mongoose.connect(
-    "mongodb+srv://manaks:PNKaY0CkJGXBLXzt@gittogether1.e2ndgo3.mongodb.net/GITIT")
+    "mongodb+srv://maks:XBLXzt@giher1.e2ndgo3.mongodb.net/")
 };
 module.exports= connectdb;
 
