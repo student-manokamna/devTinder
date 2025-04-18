@@ -1,6 +1,12 @@
+// <!-- this routes se hum tinder k acc bna rhe so it come under lec-24  -->
+
+
 // create a express router firslt by reuire it
 
 const express = require("express");
+const {validateSignUpData}=require("../utils/validation")
+const bcrypt = require("bcrypt"); 
+const User = require("../models/user")
 
 const authRouter = express.Router();   // the way to create router 
 // as authrouter is same as app in app.js as const app =express , as both r same as here authrouter = express.router(), here we define authrouter so instead of app.get/post we use authrouter.get/post
@@ -41,6 +47,10 @@ authRouter.post("/signup",async (req,res)=>{
                 res.status(400).send("error saving the user:"+ err.message);
             }
           });
+          //  as for signup we want validation so we create a new file in utils folder as validation.js and create a function in it as validateSignUpData
+          //  it means ki write correct firstname, lastname, ...all and write striong password 
+
+          //  in login we want enter correct email and password so we check this in login api
 
           authRouter.post("/login", async (req,res)=>{  // lec 22      // lec 24 same take in auth.js 
             try{
@@ -65,9 +75,11 @@ authRouter.post("/signup",async (req,res)=>{
                // add token to  cokiee and send back to user      // lec 23
                // res.cookie("token", "hhcjchoiwwdw9uknccnckslqdjpqow9udy"); // we sww token cookie on ;postman, this is random only for practice
                //  so pass token here 
-               res.cookie("token", token, {
-                 expires:new Date(Date.now() + 9*3600000)  
-               });    // so now we validate this token in get profile 
+               res.cookie("token", token
+              //   {
+              //     expires:new Date(Date.now() + 9*3600000)  
+              //  }
+              );    // so now we validate this token in get profile 
          
                res.send("login successful")     // lec 22
               }
@@ -76,9 +88,19 @@ authRouter.post("/signup",async (req,res)=>{
               }
             }
             catch(err){
-             res.status(400).send("smth is wrong ")
-         }
+              console.error("Login Error:", err.message);  // This will log the real error in the terminal
+              res.status(400).send(err.message);  // This will send the actual error message to Postman
+          }
+          
                });
                // now create a profile vali in profile.js
-               
+               // logout api create -> as here we do not need authentication or middleware bcz ager login nhi kiya or hum logout api ko call kr rhe hh tou ye harm thodi kr rha hh as we can do this as call logout api with login or after login both r corect
+
+               authRouter.post("/logout", async (req,res)=>{
+                res.cookie("token", null,{
+                  expires: new Date(Date.now())
+                });
+                res.send("logout successful");
+               })
+
 module.exports = authRouter

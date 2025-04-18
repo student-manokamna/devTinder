@@ -1,3 +1,4 @@
+
 # DevTinder APIs
 
 ## authRouter 
@@ -17,8 +18,10 @@
 -POST / request/review/rejected/:requestId
 
 ## userRouter
+-GETuser/requests/received 
 -GET/user/connections
--GET/user/requests/recevied
+
 -GET/user/feed - Gets you the profiles of other users on platform
 
 status: ignored, interested,acceepted, rejected
+<!-- npm run dev-->

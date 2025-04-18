@@ -44,11 +44,12 @@ const  usersAuth = async (req,res,next)=>{
     // now validate the data
     const {_id} = decodedObj;
     // now find user: means ki check kro jo token de rha hh uska user present hh 
-    const user = await User.findById(_id);
+    const user = await User.findById(_id);  
     if(!user){
       throw new Error("user not exist")
     }
-     req.user =user; // as ye user same hume /profile m bhi milta hh so humne yaha se hi user ko req m pass kr diya taki vo app.js m req ki form a jaye and then do next(), 
+     req.user =user; // as ager uper user ki id match ho gyi means ager vo mil gyi uper then us user ko req m pass kr do means req m store kr lo us loggin user ko  
+     // as ye user same hume /profile m bhi milta hh so humne yaha se hi user ko req m pass kr diya taki vo app.js m req ki form a jaye and then do next(), 
      // as when we go to app.js we know user is already presnt in req bcz this usersauth already set it so we dont nreed to check again if user is not present then throw err
     next(); //it means move to req handlder again
 }

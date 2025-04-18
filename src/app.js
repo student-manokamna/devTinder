@@ -1,30 +1,36 @@
-// // first we create a backened in which we take api and create  server 
-// //  create a server and you will listen on server means  you were able  to accept incoming request
-// //  to create a server (lec 11 krke anna chodq hh maine usme hh server )
+ // first we create a backened in which we take api and create  server 
+ //  create a server and you will listen on server means  you were able  to accept incoming request
+// //  to create a server (lec 11 krke anna chodq hh maine usme hh server ) which is in folder namste-node 
 // // create a server 
 
+
+
+
 // const express = require("express");
-// // create a new application of express.js
+ //// create a new application of express.js
 
 // const app = express();   // it means creating a web server using express 
-// // now see down when server listen then after that it has to accept incoming request so fir that we use: use (( req(mtlb request), res(mtlb response))=>{now send a res back})
+/* now see down when server listen then after that it has to accept incoming request so fir that we use: use (( req(mtlb request), res(mtlb response))=>{now send a res back})
 
-// // app.use("/",(req,res)=>{
-// //     res.send("Nmaste money");
-// // })
+app.use("/",(req,res)=>{
+    res.send("Nmaste money");
+})
 
-// // as what is special in above code as when we write above then browswer per kuch bhi likho /hello, /test,/xyz it always givwe nmste money  why so??
-// // this is bcz  jab bhi ye ayega / then it will give nmste money tabhi jab /hello likha tou jaise hi browser ko / dikha phle esne nmste money de diya 
-// // that is why when we write localhost:3000/hello/xyz/123 it give as yes i handle path /hello bcz browser ko phle /hello dikh gya ..but .. localhost:3000/hello123 give as cannot get/hello123 bcz ye condtion match nhi hui na /hello se as both r different 
-// // let if uper vala aap.use ko hum hello k neeche rkh de is squece matter?
-// // yes , squence matter as ager now i write /hello on browser then it print hello vali statement not / this vali bcz / neeche hh hello ke so server k malum nhi hh ki phle ye / aa chuka hh, bcz ye / neeche hh
+as what is special in above code as when we write above then browswer per kuch bhi likho /hello, /test,/xyz it always givwe nmste money  why so??
+this is bcz  jab bhi ye ayega / then it will give nmste money tabhi jab /hello likha tou jaise hi browser ko / dikha phle esne nmste money de diya 
+that is why when we write localhost:3000/hello/xyz/123 it give as yes i handle path /hello bcz browser ko phle /hello dikh gya ..but .. localhost:3000/hello123 give as cannot get/hello123 bcz ye condtion match nhi hui na /hello se as both r different 
+let if uper vala aap.use ko hum hello k neeche rkh de is squece matter?
+yes , squence matter as ager now i write /hello on browser then it print hello vali statement not / this vali bcz / neeche hh hello ke so server k malum nhi hh ki phle ye / aa chuka hh, bcz ye / neeche hh
 
-// // if we take app.use ("user") es sabh get, post, delete k uper then ye vala ko print ho rhq hh bcz order matter yrr!!! as esko dikh gya ki jaise hi /user aye tou phla vala hi print kr dena that is reason
-// // app.use("/user",(req,res)=>{
-// //     console.log(req.query)  // so when we write http://localhost:3000/user?userId=101 then to get { userId: '101' } we use 
-// //     res.send("order matter bro");
-// // })
-// // similarly i want as  http://localhost:3000/user/2000 ,(this is call as dynamic) then we do so as 
+if we take app.use ("user") es sabh get, post, delete k uper then ye vala ko print ho rhq hh bcz order matter yrr!!! as esko dikh gya ki jaise hi /user aye tou phla vala hi print kr dena that is reason
+app.use("/user",(req,res)=>{
+    console.log(req.query)  // so when we write http://localhost:3000/user?userId=101 then to get { userId: '101' } we use 
+    res.send("order matter bro");
+})
+similarly i want as  http://localhost:3000/user/2000 ,(this is call as dynamic) then we do so as  */
+
+// in lec-16 we study only about app.use
+
 // app.use("/user/:userId",(req,res)=>{    // can add any dynamic futher also "/user/:userId/:name/:paaword" here : this means it isa dynamic route 
 //     console.log(req.params)     
 //     res.send({firstname: "hahahhaha", lastname: "noooo"});
@@ -63,9 +69,9 @@
 
 // // so now go to browser and check localhost:3000; 
 // // now to create a server we have to call a listen with port no. so that connection is made 
-// app.listen(3000, ()=>{
+// app.listen(3000, ()=>{   // this is also lec-16 starting when app listen to request coming from port 3000 
 //     console.log(" server successfully listening  on port no. 3000")
-// });   // it also take a callvback func
+// });   // it also take a callvback func 
 
 
 
@@ -106,6 +112,7 @@ const app=  express()
 // app.listen(7777,()=>{  
 //     console.log("now it is done okay na , happy y r now"); 
 // })
+
 
 
 // as it is not easy way to solve it  in forming differnt route and solve it ,  as req is send not directlt first it is authorised then it is send 
@@ -152,6 +159,7 @@ const app=  express()
 
 //     }
 // });
+
 // app.get("/admin/alldata",(req,res)=>{
 //      res.send("yes it is");
 // });
@@ -166,7 +174,7 @@ const app=  express()
 
 // const {adminAuth} = require("./middlewares/auth")
 // const {userAuth} =require("./middlewares/auth")
-// app.use("/admin",adminAuth);
+// app.use("/admin",adminAuth); // this is middlware and here we use maily app.use so that it is applicable for all 
 // app.use("/user",userAuth); // m-1 , m-2 is when single user is present then write as app.get("/user",useAuth, (req,res)=>{  res.send(" i am a user");   })
 
 // // create one more same as admin as user to understand better
@@ -199,6 +207,7 @@ const app=  express()
 //          console.log("now it is done okay na , happy y r now"); 
 //      });
 
+
 // but best way is  try catch: m-2 
 
 // app.get("/getuserdata",(req,res)=>{
@@ -225,7 +234,7 @@ const app=  express()
 //      });
 
 // lec 19
-
+// first here go to database.js and then come here
 // const express = require("express");
 // const app=  express()  // ye tou uper likha hua hh eske neeche likhna
 
@@ -236,12 +245,11 @@ const app=  express()
 
 // as abive is not good way bcz here we r lisetening then database is connected what if listen is happening but data is not there so
 // write is first connect to database then to listen
-
+// .then return promise means jab tk prmise resolev nhi hi jati(indirectly jab tk database connect nhi ho jata hh) tab tk listen nhi hoga so we use .then and catch for it
+ 
 // import
 //  const connectdb = require("./config/database")
- 
-  
-//  connectdb()
+ //  connectdb()
 //  .then( ()=>{
 //     console.log("database connection is established!!!")
 //     app.listen(7777,()=>{  
@@ -252,7 +260,8 @@ const app=  express()
 //         console.error("database not handles.....")
 //     })
 
-// npw to fetch api or add something to it 
+// before fetching api createa user schema in models
+// now to fetch api or add something to it 
 
 
 //  const connectdb = require("./config/database")
@@ -263,37 +272,44 @@ const app=  express()
 // const userObj  ={
 //     firstName: "money",
 //     lastName: "arora",
-//     emailId : "money@arora.com",
+//     emailId : "money@arora.com",`
 //     password: "money@123"
 // }
 // // to save this userobj in our manogodb we have to create a instances of model , as we create a instance of the user model which is already inuser.js and we add this userobj in that model
 // // so above firstly require user ;
 // const user = new User(userObj); // it means we create a new user with th data in userobj
-// //or me say we creating ainstance of user model as it consist new, name of model is User and the data which we need to store in user 
-// // as alag se userobj na bnaker new user ({ k ander userobj vala data daal do })---m-2
+/* or me say we creating ainstance of user model as it consist new, name of model is User and the data which we need to store in user 
+as alag se userobj na bnaker new user ({ k ander userobj vala data daal do })---m-2
 
-// // await user.save();
+await user.save();
 
-//  // it will save data to database , and it return promise;
-// // remember: most of mongoose func return promises so we have to use await and make a func async;
+ it will save data to database , and it return promise;
+remember: most of mongoose func return promises so we have to use await and make a func async;
 
-// // res.send("user added successfully");  
+res.send("user added successfully");  
 
-// // end a response back
-// // now after this check on mongodb comapss we get our devtinder file is there in which we store our dummy data
-// // now lwts change name money to mano , and baki sabh bhi kr do fir api call kroge or mangodb per dekho ge tou mano vala bhi aa jayega 
-// // as here _id or --v aapne aata hh mongocompass m as ye piche se mongo m define hh and we ad manually also id jaise firstname likha hh 
-
+end a response back
+now after this check on mongodb comapss we get our devtinder file is there in which we store our dummy data
+now lwts change name money to mano , and baki sabh bhi kr do fir api call kroge or mangodb per dekho ge tou mano vala bhi aa jayega 
+as here _id or --v aapne aata hh mongocompass m as ye piche se mongo m define hh and we ad manually also id jaise firstname likha hh 
+ */
 
 // // always keep this all in try catch so let us do in that 
 // try{
-//     await user.save();
+//     await user.save();     //save() returns a promise, so we use await to wait until the data is saved.
 //     res.send("user added successfully");  
 // } catch(err){
 //     res.status(400).send("error saving the user:"+ err.message);
 // }
 //  })
 
+// so below :
+// connectdb() is called
+// This connects MongoDB with our Node.js server.
+// It returns a promise (either it connects successfully or fails).
+// .then(() => {...}) waits for connection
+// Then, app.listen(7777, () => {...}) runs.
+// The server starts listening on port 7777.
   
 //  connectdb()
 //  .then( ()=>{
@@ -312,11 +328,93 @@ const app=  express()
 // const connectdb = require("./config/database")
 //  const User = require("./models/user")
  
-//  app.use(express.json()); // this is middlware 
+//  app.use(express.json()); // this is middlware  as we write middleware for all method of hhtp by using app.use() 
+// we need middlware to parse the json data which we send from postman and we pass it so that our server can understand as it convert inot js object whixh is read by our terminal 
+// so req.body give us same data which we write in raw body in postman 
+// const user = new user(req.bidy) pass this directly bcz in req.body come thatd ata which we write on raw body of postman
+
+
 //  app.post("/signup",async (req,res)=>{
 
 //  console.log(req.body);
 //  });
+//  get email id 
+// app.get("/user", async (req,res)=>{
+//   const useremail= req.body.emailId;
+//   //  so hume jo email chiae vo hum req.body u know what it is jo postman per wmail hh vo hh ye so ye email nikal rhe hh
+
+//   try{
+//     const users = await User.find({emailId: useremail}); // here it is model.find()
+
+//  as find  return as an array if kuh ayea tou arr m kuch dega vrna return [] sp we check ki legth khali hh tou email nhi mili na
+//  and findone return us kuxh hh then ok else return undefined 
+
+//     if(users.length===0){
+//       res.status(404).send("smthg wrong user not found")
+//     }
+//     else{ 
+//  res.send(users);
+
+//}
+  
+//   }catch(err){
+//     res.status(401).send("smthg is wrong")
+//   }
+// })
+// //  so write email whoch u wan tto serach in get api /user krke then when u send y get whole information name, email ... all thing in result
+
+// //  now i want /feed api in which i want  to retun all user means jitne bhi presnrt hh dtaabse sare ka sare aa jaye(tou res m sirf user name hi nhi uska pura data ayega jitne maine likhe hh )
+// app.get("/feed",async(req,res)=>{
+//   try{
+//     const alluser = await User.find({}); // empty rkh dena tabhi sabh return hoga
+//     res.send(alluser);
+//   }catch(err){
+//     res.status(401).send("smthg is wrong")
+//   }
+// })
+
+// //  same we can also use findone in which if we have copy of smae it will return only one 
+// //  now how to delete 
+// app.delete("/user", async(req,res)=>{
+//   const userId = req.body.userId;
+//   try{
+//     const user = await User.findByIdAndDelete({_id: userId});
+//     //  or we write above as 
+//     // const user = await User.findByIdAndDelete(userId);
+//     res.send("deleted successfully")
+//   }catch(err){
+//     res.status(401).send("smthg is wrong")
+//   }
+// })
+
+//  so kya kro poatman per jaker dleete http slect kro and write hhtp:/loca... /user and fir
+// eski boy m likho {"userId": "jiski delete krni hh uski id copy krke daal do"}
+
+//  now to update the datta of user use of patch
+
+// app.patch("/user", async(req,res)=>{
+//   const userId = req.body.userId;
+//   const data=req.body
+//   try{
+//     const user = await User.findByIdAndUpdate({_id: userId},data,runValidators: true); // it means es user id m jo maine data dalla hh like firstname email jo maine postman per daali hh usko update krna hh means vo updates show krega 
+//   //   here u see that userid is not ipdating bcz user id is not userschema
+//   //  so whatever is not in user schema that will not update or added if u add smthg new  ..eg like userid not updating
+//     res.send("user updated succesfully");
+//   }catch(err){
+//     res.status(401).send("smthg is wrong")
+//   }
+// })
+//  here dekh userid m koi change nhi ayega bcz it is not in userschema 
+//  as is userid kya fayda kya hua fir it means ki es user id per jaker firstanme, gender , enhe update kr do 
+//  fir user id kyo dikha bcz id tou present hh na 6736d576be30db262cf0fb47" ye but userid m ye d hh meand update nhi hoga kuch lekin id tou dekhegi na
+
+
+//  we also have optional thing in it like after and before 
+// const user = await User.findByIdAndUpdate({_id: userId},data, {returnDocument:"before"}); 
+// console.log(user) it is defautl "before "vala and return before update vala
+//  similarly u use "after "here whoch return after update vala 
+//  after this runvalidstor vala see neeche in code what more added in patch 
+
 //  connectdb()
 //   .then( ()=>{
 //      console.log("database connection is established!!!")
@@ -331,10 +429,10 @@ const app=  express()
 
 // now let  us take our prev-prev code back
 
-const connectdb = require("./config/database")
+/* const connectdb = require("./config/database")
  const User = require("./models/user")
- const {validateSignUpData}=require("./utils/validation")   // lec 22 
- const bcrypt = require("bcrypt");     // lec 22
+//  const {validateSignUpData}=require("./utils/validation")   // lec 22 
+//  const bcrypt = require("bcrypt");     // lec 22
  const cookieParsel = require("cookie-parser");   // lec 23
  const jwt = require("jsonwebtoken");    // lec 23
  const {usersAuth} = require("./middlewares/auth")  // lec 23  
@@ -343,6 +441,7 @@ const connectdb = require("./config/database")
  app.use(express.json()); // this is middlware 
  app.use(cookieParsel())  // this is middlware  lec 23 
 
+ */
 //  app.post("/signup",async (req,res)=>{       // yaha app.post likha hh or same authrouter define kiya tou vaha authrouter.post likhege  so i am hidng this bcz hum ek m sabh nhi likhte 
 
  
@@ -356,13 +455,17 @@ const connectdb = require("./config/database")
 // //    validateSignUpData(req);   // lec 22   put this in try catch so eske neeche vala const user bhi abb esme hi ayega bcz we say phle validation then it create instance of it 
 
 // try{
+// validation of data 
 //     validateSignUpData(req);
 //     // creating strong password // lec 22
+//  
 //     const {firstName, lastName, emailId,password} = req.body;
+//  above is ki req.body se vo chije extratc kr rhe hh jo hume require hh 
 //     // encrypt password 
 //     const passwordHash =  await bcrypt.hash(password,10);  // here 10 is saltround
 //     console.log(passwordHash);
 //     // const user = new User(req.body);  // as userobj ki jagaj likha bca it is same as req.body
+//  so explicity extract which u want like firstname, lastname, emailId, password  and put in model : 
 //     // the above is a bad practice as to directly pass req.body // (lec-22) so correct way is
 //     const user = new User({  // as eske nander vo likhe hh jo hume req hh baki sabh ignore ho jauyege jo esme nhi hh 
 //       firstName,
@@ -379,7 +482,7 @@ const connectdb = require("./config/database")
 //         }
 //       });
 
-
+//  so postman per likho ye sabh and these 4 chije is required other raise err if we write in this 
 
       // now create a login   // lec 22
       
@@ -396,16 +499,25 @@ const connectdb = require("./config/database")
 //       }
 //       // const  isPasswordValid = await bcrypt.compare(password, user.password) // to commpre first check ki vo email present bhi hh kya db m 
 //       // above is m-1 ,,,so do ny m-2 is 
-//       const  isPasswordValid = await user.validatePassword(password)
+//       const  isPasswordValid = await user.validatePassword(password) 
+//  or this validatePassoword we use method in userschema so see user.js
 //       if(isPasswordValid){       // lec 22 
-//       // create jwt token    //  lec 23   toke n({hiding data}, "private/secret key")
+
+// once after login - email and password validate then a server give a jwt token which wrap inside cookie
+//  so we get this jwt token only after emaila and passwoerd valide so we use here :
+
+
+
+//        create jwt token    //  lec 23   toke n({hiding data}, "private/secret key")
 //       // const token = await jwt.sign({_id: user._id},"DEV@tinder$345",{
 //       //   expiresIn: "7d",
 //       // })   // this is rugjt but m-2 is 
 //       const token =  await user.getJWT();
+// for to cretae token this is 2nd way as first we write above  we use method in userschema so see user.js
 //       //  console.log(token);
 //        //so we create token now pass it back: neeche 
-//       // add token to  cokiee and send back to user      // lec 23
+//        add token to  cokiee and send back to user      // lec 23
+// so we send response back with cookie in which jwt token is there so see neeche vala res.cookie( )
 //       // res.cookie("token", "hhcjchoiwwdw9uknccnckslqdjpqow9udy"); // we sww token cookie on ;postman, this is random only for practice
 //       //  so pass token here 
 //       res.cookie("token", token, {
@@ -426,12 +538,13 @@ const connectdb = require("./config/database")
 
       
       // as we generate a cookie now to chcek it validation futher let us create a get/profile which take cookie with itself and validate it 
-      app.get("/profile", usersAuth, async (req,res)=>{          // create this in another file by see in lec 24
+      
+      //app.get("/profile", usersAuth, async (req,res)=>{          // create this in another file by see in lec 24
         // try{    // this try is m-1 jab humne code auth.js m nhi likha as jab auth.js m lik diya tou ye same hi hogya na so esko modify krke likhgeg in m-2
         //   const cookies = req.cookies;
           
         // // console.log(cookies);
-        // // vslidation of token 
+        //  vslidation of token 
         // const {token} = cookies;
         // if(!token){
         //   throw new Error("invalid error")
@@ -451,33 +564,61 @@ const connectdb = require("./config/database")
         // // see as in response we get read cookies means hume vha vokkies mil gyi lekin in console we have undefined bcz humse ye cookies read nhi ho rhi,we r not getting it back here so for this we need a npm library, a middleware that is cookie parsal
         // // so need a cookie-parser , it is also given by express.js , so now insatll it=> npm i cookie-parser 
         // // after insatll import it and write middleware of it is app.use(cookieparsel());
-        // }
-        try{
-          const user = req.user  // se auth.js smj aa jayega neeche likha hh (as do to userauth), dry run it  by eg on postman 
-          res.send(user);   // so now go to profile jo banda login hoga uska data aa jayega 
+        // }   // above is m-1 
+      //   try{
+      //     const user = req.user  // se auth.js smj aa jayega neeche likha hh (as do to userauth), dry run it  by eg on postman 
+      //     res.send(user);   // so now go to profile jo banda login hoga uska data aa jayega 
 
         // see as in response we get read cookies means hume vha vokkies mil gyi lekin in console we have undefined bcz humse ye cookies read nhi ho rhi,we r not getting it back here so for this we need a npm library, a middleware that is cookie parsal
         // so need a cookie-parser , it is also given by express.js , so now insatll it=> npm i cookie-parser 
-        // after insatll import it and write middleware of it is app.use(cookieparsel());
-        }
-        catch(err){
-          res.status(400).send("ERRROR: "+err.message);
-      }
+         // after insatll import it and write middleware of it is app.use(cookieparsel());
+      //   }
+      //   catch(err){
+      //     res.status(400).send("ERRROR: "+err.message);
+      // }
 
-      })
+    //  })
 
-      app.post("/sendConnectionRequest", usersAuth, async (req,res)=>{
-        // to check ki kis user ne req bheji hh 
-        const user = req.user ;
-         // made  connection
-         console.log("connection is made");
-        //  res.send("send connection")
-        res.send( user.firstName+"send connection request!")   // now first go to login then goo to sendconnreq
-      })
+
+      // see this in request.js in lec 24
+
+      // app.post("/sendConnectionRequest", usersAuth, async (req,res)=>{
+      //   // to check ki kis user ne req bheji hh 
+      //   const user = req.user ;
+      //    // made  connection
+      //    console.log("connection is made");
+      //   //  res.send("send connection")
+      //   res.send( user.firstName+"send connection request!")   // now first go to login then goo to sendconnreq
+      // })
+
+      const connectdb = require("./config/database")
+      const User = require("./models/user")
+     //  const {validateSignUpData}=require("./utils/validation")   // lec 22 
+     //  const bcrypt = require("bcrypt");     // lec 22
+      const cookieParsel = require("cookie-parser");   // lec 23
+      const jwt = require("jsonwebtoken");    // lec 23
+      const {usersAuth} = require("./middlewares/auth")  // lec 23  
+      // this userauth is added to any api and this make that api very strong
+      const cors = require("cors")
+      app.use(express.json()); // this is middlware 
+      app.use(cookieParsel())  // this is middlware  lec 23 
+     app.use(cors())
+     
+     
+      //  lec 24
+const authRouter  =require("./routes/auth");
+const profileRouter = require("./routes/profile");
+const requestRouter= require("./routes/request");
+const userRouter = require("./routes/user")
+
+app.use("/", authRouter);
+app.use("/", profileRouter);
+app.use("/", requestRouter);
+app.use("/", userRouter)
      
  
 
-    
+    //  ye same hi hh uper likh ayi m 
       // now get user by its email :     // eske neeche vale use nhi hh mere tinder k liye 
       app.get("/user",async (req,res)=>{
 const userEmail = req.body.emailId;  // hume email chaie so humne body se req krke emailId li and it is that emailId jo vaha likhi hh postman per 
@@ -519,6 +660,7 @@ catch(err){
       })
       
       // now to update data
+      
       app.patch("/user", async (req,res)=>{
         const userId = req.body.userId;
         const data = req.body;  // the data which we need to update
@@ -528,7 +670,12 @@ catch(err){
         const ALLOWED_UPDATES = ["userId","photoUrl","age","skills","gender","about"] ;
         const isUpdateAllowed = Object.keys(data).every((k)=>  // it means ki ye sare userid, age, skills ye sabh keys  hh or data jo ki uder psotman per hh filhal(req.body m ) so we r saying ki ager every key present hh allowed_uodated vale m then ojk if not then  err through kr do 
         ALLOWED_UPDATES.includes(k)
+        //  as why we need to userid in update bcz we need to know which user we r updating
+        //  so we define here as
+        //  app.patch("/user/:userId, async (req,res)=>{ // WE USE : THIS SOuse of param instead of body
+        // const userId = req.param?.userId; 
     );
+    
     if(!isUpdateAllowed){
        throw new Error("updated not allow") // as here we r not giving email in main allowed_updates, so it is giving this if cond  
     }
@@ -536,9 +683,10 @@ catch(err){
         throw new Error("skills cannot be more than 10");
     }
     // bs yaha tk tha 21 vala 
+    // below is lec 20
           await User.findByIdAndUpdate({_id: userId}, data,{
             returnDocument: "after",
-            runValidators:true,
+            runValidators:true, // ye raha validator 
           });
           res.send(" is it updated successfully");
         }
@@ -589,6 +737,11 @@ catch(err){
     // so in terminal write : npm i validator and we get this in package json
     // go to user.js and in email write validiate fun , first require validtor , also use validtor for phtoturl, same for password also (for strong password)
 
+    //  as hum alag alg likh rhe thi validtor lga kr user.js m but kyo na hum ek new folder bane src m usme likhe and then pass it as validatesignup vala in main taki
+    // hamari main file saaqf rhe vo clean rhe , so create a new folder in src name utils and in that file is validate.js
+    // solve all req field validate and then export and import it in app.js
+    
+
 
 
     // lec -22 
@@ -608,6 +761,7 @@ catch(err){
  // as we can  also generate salts , as bcrypt.gensalt(see documentation) as here , simple password combine with salts and undergo multiple round to icc encryption and then provide strong password 
  // so write code in app.js in encryption  and console and check it , solve eg on it
  // now we have created a signup , now we create a login to understand it better : do eg of it also 
+ 
 
 
 // lec 23 
@@ -651,3 +805,7 @@ catch(err){
  // so create a folder routes in src which mange or router handler and in routes create a file auth.js which manages auth vale apis so esme signup,login,logout hh so ye maine app.js m directly bhi likhe hh so enko edhar nhi likhte enko routes m daalo 
  // as authrouter is same as app in app.js as const app =express , as both r same as here authrouter = express.router(), here we define authrouter so instead of app.get/post we use authrouter.get/post
 // as we define app.use here we define router.use ;
+
+
+ 
+   

@@ -22,6 +22,24 @@ const validateSignUpData = (req)=>{   // req is send from app.js vale post sign 
     }
 
 }
+
+const validateEditProfileData = (req)=>{
+  const allowedEditFeilds = [
+    "firstName",
+    "lastName",
+    "emailId",
+    "age",
+    "about",
+    "skills",
+    "photoUrl",
+    "gender",
+  ];
+  const isEditAllowed = Object.keys(req.body).every(feild=>
+    allowedEditFeilds.includes(feild)
+  )
+  return isEditAllowed;
+}
 module.exports = {
 validateSignUpData,
+validateEditProfileData,
 }

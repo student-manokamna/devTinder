@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcrypt"); 
 const jwt = require("jsonwebtoken")
+
+
 const userSchema = new mongoose.Schema({
     firstName: {
         type: String,
@@ -69,13 +71,14 @@ const userSchema = new mongoose.Schema({
 })
 // lec 23 
 userSchema.methods.getJWT = async function () {
-    const user = this;
+    const user = this; 
     const token = await jwt.sign({_id: user._id},"DEV@tinder$345",{
         expiresIn: "7d",
       });
       return token;
     
 };
+
 // now solve method for validation...
 userSchema.methods.validatePassword = async function(passwordInputbyUser){
     const user = this ;
@@ -84,10 +87,29 @@ userSchema.methods.validatePassword = async function(passwordInputbyUser){
     const isPasswordValid =  await bcrypt.compare(passwordInputbyUser , passwordHash);
     return isPasswordValid;
 
-} ;
+} 
+
 
 // now create a model in which first model name is pass and sec argument is schema name: userschema
-// m-1  
+// const userSchema = new mongoose.schema({
+//     firstName:{
+//         type: string,
+//     },
+//     lastName:{
+//         type: string,
+//     },
+//     emailId:{
+//         type: string,
+//     },
+//     password:{
+//         type: string,
+//     },
+//     age:{
+//         type: number,
+//     },
+// })
+
+// m-1   now to create a model from schema 
 // const user =  mongoose.model("User",userSchema)
 // module.exports = user;
 
